@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # 3rd party packages
+    'parler',
     'rest_framework',
     'corsheaders',
     'django_filters',
@@ -76,8 +77,12 @@ WSGI_APPLICATION = 'project.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': os.getenv('SQL_NAME'),
+        'USER': os.getenv('SQL_USER'),
+        'PASSWORD': os.getenv('SQL_PASSWORD'),
+        'HOST': os.getenv('SQL_HOST'),
+        'PORT': os.getenv('SQL_PORT')
     }
 }
 
@@ -102,7 +107,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'en'
 
 TIME_ZONE = 'Asia/Tashkent'
 
@@ -125,3 +130,19 @@ MEDIA_ROOT = BASE_DIR / 'media'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ALLOW_ALL_ORIGINS = True
+
+LANGUAGES = (
+    ('uz', 'Uzbek'),
+    ('en', 'Kiril'),  # English -> Kiril
+)
+
+PARLER_LANGUAGES = {
+    None: (
+        {'code': 'uz', },
+        {'code': 'en', },
+    ),
+    'default': {
+        'fallbacks': ['uz'],
+        'hide_untranslated': False,  # Default
+    }
+}
