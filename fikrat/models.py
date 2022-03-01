@@ -1,3 +1,5 @@
+import os
+
 from django.core.validators import FileExtensionValidator
 from django.db import models
 from django.utils import timezone
@@ -63,6 +65,15 @@ class Book(TranslatableModel):
         verbose_name = "kitob"
         verbose_name_plural = "kitoblar"
 
+    @property
+    def file_size(self):
+        return "%.2f MB" % ((self.file.size / 1024) / 1024)
+
+    @property
+    def file_extension(self):
+        name, extension = os.path.splitext(self.file.name)
+        return extension[1:].upper()  # .pdf -> PDF
+
 
 class Photo(models.Model):
     """
@@ -71,7 +82,7 @@ class Photo(models.Model):
     image = models.ImageField(upload_to='photos/')
 
     def __str__(self):
-        return self.pk
+        return str(self.pk)
 
     class Meta:
         verbose_name = "rasm"
@@ -85,7 +96,7 @@ class Proverb(models.Model):
     image = models.ImageField(upload_to='proverbs/')
 
     def __str__(self):
-        return self.pk
+        return str(self.pk)
 
     class Meta:
         verbose_name = "hikmat"
@@ -127,10 +138,12 @@ class Article(TranslatableModel):
         title=models.CharField(max_length=250),
         content=models.TextField()
     )
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.title
 
     class Meta:
+        ordering = ['-created_at']
         verbose_name = "maqola"
         verbose_name_plural = "maqolalar"

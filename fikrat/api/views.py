@@ -1,5 +1,8 @@
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.filters import SearchFilter
 from rest_framework.generics import ListAPIView, RetrieveAPIView
 
+from fikrat.api.paginations import EightPagination, FourPagination
 from fikrat.models import Category, Language, Author, Book, Photo, Proverb, Media, ArticleAuthor, Article
 from fikrat.api.serializers import (
     CategoryModelSerializer,
@@ -31,8 +34,21 @@ class AuthorListAPIView(ListAPIView):
 
 
 class BookListAPIView(ListAPIView):
-    queryset = Book.objects.all()
+    queryset = Book.objects.filter(is_audio=False)
     serializer_class = BookListModelSerializer
+    pagination_class = EightPagination
+    filter_backends = [DjangoFilterBackend, SearchFilter]
+    filterset_fields = ('category', 'language', 'author')
+    search_fields = ('translations__title', 'translations__publisher')
+
+
+class AudioBookListAPIView(ListAPIView):
+    queryset = Book.objects.filter(is_audio=True)
+    serializer_class = BookListModelSerializer
+    pagination_class = EightPagination
+    filter_backends = [DjangoFilterBackend, SearchFilter]
+    filterset_fields = ('category', 'language', 'author')
+    search_fields = ('translations__title', 'translations__publisher')
 
 
 class BookRetrieveAPIView(RetrieveAPIView):
@@ -43,16 +59,19 @@ class BookRetrieveAPIView(RetrieveAPIView):
 class PhotoListAPIView(ListAPIView):
     queryset = Photo.objects.all()
     serializer_class = PhotoModelSerializer
+    pagination_class = EightPagination
 
 
 class ProverbListAPIView(ListAPIView):
     queryset = Proverb.objects.all()
     serializer_class = ProverbModelSerializer
+    pagination_class = EightPagination
 
 
 class MediaListAPIView(ListAPIView):
     queryset = Media.objects.all()
     serializer_class = MediaModelSerializer
+    pagination_class = FourPagination
 
 
 class ArticleAuthorListAPIView(ListAPIView):
@@ -63,3 +82,6 @@ class ArticleAuthorListAPIView(ListAPIView):
 class ArticleListAPIView(ListAPIView):
     queryset = Article.objects.all()
     serializer_class = ArticleModelSerializer
+    pagination_class = FourPagination
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ('category', 'language', 'author')

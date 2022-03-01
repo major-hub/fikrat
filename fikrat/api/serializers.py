@@ -46,9 +46,9 @@ class BookListModelSerializer(BaseSerializer):
 
 
 class BookDetailModelSerializer(BaseSerializer):
-    category = AuthorModelSerializer(source='category')
-    language = AuthorModelSerializer(source='language')
-    author = AuthorModelSerializer(source='author')
+    category = CategoryModelSerializer()
+    language = LanguageModelSerializer()
+    author = AuthorModelSerializer()
     translations = TranslatedFieldsField(shared_model=Book)
 
     class Meta:
@@ -64,6 +64,8 @@ class BookDetailModelSerializer(BaseSerializer):
             'image',
             'is_audio',
             'file',
+            'file_size',  # property
+            'file_extension',  # property
         )
 
 
@@ -96,9 +98,9 @@ class ArticleAuthorModelSerializer(BaseSerializer):
 
 
 class ArticleModelSerializer(BaseSerializer):
-    category = AuthorModelSerializer(source='category')
-    language = AuthorModelSerializer(source='language')
-    author = AuthorModelSerializer(source='author')
+    category = CategoryModelSerializer()
+    language = LanguageModelSerializer()
+    author = AuthorModelSerializer()
     translations = TranslatedFieldsField(shared_model=Article)
 
     class Meta:
@@ -109,4 +111,5 @@ class ArticleModelSerializer(BaseSerializer):
             'category',
             'language',
             'author',
+            'created_at',
         )
