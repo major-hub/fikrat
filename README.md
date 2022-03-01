@@ -15,6 +15,15 @@ pip install -r requirements.txt
 
 ___
 
+# postgres
+
+```
+CREATE DATABASE fikrat WITH OWNER solijonov;
+GRANT ALL ON DATABASE fikrat TO solijonov;
+```
+
+___
+
 # Systemd service [fikrat.service]
 
 ```
