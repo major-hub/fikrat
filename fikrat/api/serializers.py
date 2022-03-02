@@ -42,6 +42,7 @@ class BookListModelSerializer(BaseSerializer):
         fields = (
             'id',
             'translations',
+            'image',
         )
 
 
