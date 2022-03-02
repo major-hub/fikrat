@@ -35,6 +35,7 @@ class AuthorModelSerializer(BaseSerializer):
 
 
 class BookListModelSerializer(BaseSerializer):
+    author = AuthorModelSerializer()
     translations = TranslatedFieldsField(shared_model=Book)
 
     class Meta:
@@ -42,6 +43,7 @@ class BookListModelSerializer(BaseSerializer):
         fields = (
             'id',
             'translations',
+            'author',
             'image',
         )
 
