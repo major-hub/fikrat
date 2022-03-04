@@ -2,6 +2,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter
 from rest_framework.generics import ListAPIView, RetrieveAPIView
 
+from fikrat.api.filters import BookFilterSet
 from fikrat.api.paginations import EightPagination, FourPagination
 from fikrat.models import Category, Language, Author, Book, Photo, Proverb, Media, ArticleAuthor, Article
 from fikrat.api.serializers import (
@@ -37,8 +38,8 @@ class BookListAPIView(ListAPIView):
     queryset = Book.objects.filter(is_audio=False)
     serializer_class = BookListModelSerializer
     pagination_class = EightPagination
+    filterset_class = BookFilterSet
     filter_backends = [DjangoFilterBackend, SearchFilter]
-    filterset_fields = ('category', 'language', 'author')
     search_fields = ('translations__title', 'translations__publisher')
 
 
@@ -46,8 +47,8 @@ class AudioBookListAPIView(ListAPIView):
     queryset = Book.objects.filter(is_audio=True)
     serializer_class = BookListModelSerializer
     pagination_class = EightPagination
+    filterset_class = BookFilterSet
     filter_backends = [DjangoFilterBackend, SearchFilter]
-    filterset_fields = ('category', 'language', 'author')
     search_fields = ('translations__title', 'translations__publisher')
 
 
