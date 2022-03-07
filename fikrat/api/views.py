@@ -39,12 +39,19 @@ class BookListAPIView(ListAPIView):
     serializer_class = BookListModelSerializer
     pagination_class = EightPagination
     filterset_class = BookFilterSet
-    filter_backends = [DjangoFilterBackend, SearchFilter]
-    search_fields = ('translations__title', 'translations__publisher')
+    filter_backends = [DjangoFilterBackend]
 
 
 class AudioBookListAPIView(ListAPIView):
     queryset = Book.objects.filter(is_audio=True)
+    serializer_class = BookListModelSerializer
+    pagination_class = EightPagination
+    filterset_class = BookFilterSet
+    filter_backends = [DjangoFilterBackend]
+
+
+class AllBookListAPIView(ListAPIView):
+    queryset = Book.objects.filter()
     serializer_class = BookListModelSerializer
     pagination_class = EightPagination
     filterset_class = BookFilterSet

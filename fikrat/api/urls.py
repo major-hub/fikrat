@@ -12,6 +12,7 @@ from fikrat.api.views import (
     ArticleAuthorListAPIView,
     ArticleListAPIView,
     AudioBookListAPIView,
+    AllBookListAPIView,
 )
 
 urlpatterns = [
@@ -20,6 +21,7 @@ urlpatterns = [
     path('author/', AuthorListAPIView.as_view(), name='author_list'),
     path('book/', BookListAPIView.as_view(), name='book_list'),
     path('audio-book/', AudioBookListAPIView.as_view(), name='audio_book_list'),
+    path('all-book/', AllBookListAPIView.as_view(), name='all_book_list'),
     path('book/<int:pk>/', BookRetrieveAPIView.as_view(), name='book_retrieve'),
     path('photo/', PhotoListAPIView.as_view(), name='photo_list'),
     path('proverb/', ProverbListAPIView.as_view(), name='proverb_list'),
