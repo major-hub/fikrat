@@ -68,3 +68,23 @@ server {
     }
 }
 ```
+
+___
+
+# Nginx [fikrat_frontend]
+
+```
+server {
+    listen 80;
+    server_name fikrat.org www.fikrat.org;
+
+    root /home/major/frontend/fikrat-build/build;
+
+    index index.html index.htm index.nginx-debian.html;
+
+    location / {
+        try_files $uri $uri/ /index.html;
+        # try_files $uri $uri/ =404;
+    }
+}
+```
